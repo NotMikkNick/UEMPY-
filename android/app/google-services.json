@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "531888142344",
+    "project_id": "uwuemploy",
+    "storage_bucket": "uwuemploy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531888142344:android:bd47bf39d806d0b16ab9bd",
+        "android_client_info": {
+          "package_name": "com.uwuploy.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpID9L3zkrN86C_Kwr2jD4V3ZHVMbiR8g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
