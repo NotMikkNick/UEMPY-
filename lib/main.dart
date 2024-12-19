@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-void main() {
+void main() {await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 
