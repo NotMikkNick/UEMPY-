@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart'; // Diese Datei sollte die `DefaultFirebaseOptions` enthalten
 
-void main() {await Firebase.initializeApp(
+void main() async {await Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 );
   runApp(const MyApp());
