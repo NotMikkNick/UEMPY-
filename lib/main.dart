@@ -1,104 +1,66 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'firebase_options.dart'; // Falls du DefaultFirebaseOptions nutzt
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart'; // This file is generated when setting up Firebase for your project
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
 
+  // Initialize Firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Run the app
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
+  // Constructor updated to include the 'key' parameter
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginScreen(),
+      title: 'Flutter Firebase Demo',
+      home: const MyHomePage(),  // MyHomePage now has a const constructor
     );
   }
 }
 
-class LoginScreen extends StatefulWidget {
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  Future<void> signUp() async {
-    try {
-      await _auth.createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-      print("Registrierung erfolgreich!");
-    } catch (e) {
-      print("Fehler bei der Registrierung: $e");
-    }
-  }
-
-  Future<void> signIn() async {
-    try {
-      await _auth.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-      print("Login erfolgreich!");
-    } catch (e) {
-      print("Fehler beim Login: $e");
-    }
-  }
-
-  Future<void> signOut() async {
-    try {
-      await _auth.signOut();
-      print("Logout erfolgreich!");
-    } catch (e) {
-      print("Fehler beim Logout: $e");
-    }
-  }
+class MyHomePage extends StatelessWidget {
+  // Constructor updated to include the 'key' parameter
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Firebase E-Mail/Login"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'E-Mail'),
-            ),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: 'Passwort'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: signUp,
-              child: const Text("Registrieren"),
-            ),
-            ElevatedButton(
-              onPressed: signIn,
-              child: const Text("Anmelden"),
-            ),
-            ElevatedButton(
-              onPressed: signOut,
-              child: const Text("Abmelden"),
-            ),
-          ],
-        ),
-      ),
+      appBar: AppBar(title: const Text('Firebase Test')),
+      body: const Center(child: Text('Firebase is ready!')),
     );
   }
-}}
+}
+
+class AuthService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  // Method to sign in with email and password
+  Future<User?> signInWithEmailPassword(String email, String password) async {
+    try {
+      // Attempt sign-in with the provided credentials
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return userCredential.user;  // Return the signed-in user
+    } catch (e) {
+      // Log errors, but do not use 'print' in production code
+      // Replace with a proper logging method if needed
+      debugPrint("Error: $e");
+      return null;
+    }
+  }
+
+  // Method to sign out the user
+  Future<void> signOut() async {
+    await _auth.signOut();
+  }
+}
